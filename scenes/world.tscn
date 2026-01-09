@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d05isox83rlk8"]
+
+[ext_resource type="Texture2D" uid="uid://bl2n2r172ito" path="res://sammi.jpg" id="1_nnsk1"]
+[ext_resource type="PackedScene" uid="uid://bjp2xgds1j05w" path="res://scenes/player.tscn" id="2_rwgxs"]
+
+[node name="world" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(734, 1010)
+scale = Vector2(0.48209634, 0.49754903)
+texture = ExtResource("1_nnsk1")
+
+[node name="Player" parent="." instance=ExtResource("2_rwgxs")]
+position = Vector2(558, 288)

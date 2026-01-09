@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjp2xgds1j05w"]
+
+[ext_resource type="Texture2D" uid="uid://vo08ekxrd68o" path="res://sprites/tank.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://spxucio84smr" path="res://scripts/player.gd" id="1_g2els"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g2els"]
+size = Vector3(32, 32, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
+size = Vector2(32, 32)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_g2els")
+
+[node name="TankBodyMesh" type="MeshInstance2D" parent="."]
+mesh = SubResource("BoxMesh_g2els")
+
+[node name="TankBodySprite" type="Sprite2D" parent="TankBodyMesh"]
+texture = ExtResource("1_3vyb7")
+
+[node name="TankCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qhqgy")
