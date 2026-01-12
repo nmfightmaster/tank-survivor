@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjp2xgds1j05w"]
+[gd_scene load_steps=6 format=3 uid="uid://bjp2xgds1j05w"]
 
 [ext_resource type="Texture2D" uid="uid://vo08ekxrd68o" path="res://sprites/tank.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://spxucio84smr" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://gv36e3ouo0kq" path="res://sprites/turret.png" id="3_qhqgy"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_g2els"]
 size = Vector3(32, 32, 0)
@@ -20,3 +21,6 @@ texture = ExtResource("1_3vyb7")
 
 [node name="TankCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qhqgy")
+
+[node name="TankTurretSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_qhqgy")
