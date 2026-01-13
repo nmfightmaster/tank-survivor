@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://missile12345"]
+
+[ext_resource type="Script" path="res://scripts/missile.gd" id="1_missile"]
+[ext_resource type="Texture2D" uid="uid://7w2k3c4d5e6f" path="res://sprites/missile.png" id="2_sprite"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_missile"]
+size = Vector2(8, 8)
+
+[node name="Missile" type="Area2D"]
+script = ExtResource("1_missile")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_sprite")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_missile")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-4, -4, 8, 8)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

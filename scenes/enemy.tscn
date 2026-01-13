@@ -24,3 +24,6 @@ shape = SubResource("RectangleShape2D_c4w8v")
 
 [node name="TankTurretSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_4ra3w")
+
+[node name="Muzzle" type="Marker2D" parent="TankTurretSprite"]
+position = Vector2(0, -16)

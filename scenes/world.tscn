@@ -1,10 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://d05isox83rlk8"]
+[gd_scene load_steps=5 format=3 uid="uid://d05isox83rlk8"]
 
 [ext_resource type="PackedScene" uid="uid://bud6b6aep1j11" path="res://scenes/background.tscn" id="2_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://bjp2xgds1j05w" path="res://scenes/player.tscn" id="2_rwgxs"]
-[ext_resource type="Script" path="res://scripts/spawner.gd" id="3_spawner"]
+[ext_resource type="Script" uid="uid://cyqkdbs3v3msy" path="res://scripts/spawner.gd" id="3_spawner"]
 [ext_resource type="PackedScene" uid="uid://b0lr6v45q15bp" path="res://scenes/enemy.tscn" id="4_enemy"]
-
 
 [node name="world" type="Node2D"]
 
@@ -17,4 +16,3 @@ layer = -1
 [node name="Spawner" type="Node2D" parent="."]
 script = ExtResource("3_spawner")
 enemy_scene = ExtResource("4_enemy")
-

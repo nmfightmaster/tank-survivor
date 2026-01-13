@@ -25,4 +25,7 @@ shape = SubResource("RectangleShape2D_qhqgy")
 [node name="TankTurretSprite" type="Sprite2D" parent="."]
 texture = ExtResource("3_qhqgy")
 
+[node name="Muzzle" type="Marker2D" parent="TankTurretSprite"]
+position = Vector2(0, -16)
+
 [node name="Camera2D" type="Camera2D" parent="."]
