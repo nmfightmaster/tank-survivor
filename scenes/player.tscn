@@ -10,7 +10,7 @@ size = Vector3(20, 32, 0)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
 size = Vector2(20, 32)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_g2els")
 
 [node name="TankBodyMesh" type="MeshInstance2D" parent="."]
