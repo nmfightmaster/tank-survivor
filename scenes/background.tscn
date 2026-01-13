@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bud6b6aep1j11"]
+
+[ext_resource type="Texture2D" uid="uid://cwkfbuayb3txq" path="res://sprites/dirt_tile.png" id="1_bkp1e"]
+[ext_resource type="Script" uid="uid://4ib3q1ckeoqe" path="res://scenes/background.gd" id="2_y0upk"]
+
+[node name="Background" type="ParallaxBackground"]
+script = ExtResource("2_y0upk")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+texture_repeat = 2
+texture = ExtResource("1_bkp1e")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4096, 4096)
