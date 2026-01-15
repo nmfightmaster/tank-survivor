@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmuffuqth4y7k"]
+
+[ext_resource type="Script" uid="uid://lkvd4k1tfbn2" path="res://scripts/mob_spawner.gd" id="1_ljl1v"]
+[ext_resource type="PackedScene" uid="uid://b0lr6v45q15bp" path="res://scenes/enemy.tscn" id="2_m10af"]
+
+[node name="MobSpawner" type="Node3D"]
+script = ExtResource("1_ljl1v")
+mob_scene = ExtResource("2_m10af")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

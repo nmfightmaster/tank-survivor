@@ -8,11 +8,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_qhqgy"]
 size = Vector3(4, 3, 6)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("tankBodyMesh", "tankTurretMesh", "tankCollision")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("tank_body_mesh", "tank_turret_mesh", "tank_collision")]
 script = ExtResource("1_dqkch")
-tankBodyMesh = NodePath("Body")
-tankTurretMesh = NodePath("Turret")
-tankCollision = NodePath("CollisionShape3D")
+tank_body_mesh = NodePath("Body")
+tank_turret_mesh = NodePath("Turret")
+tank_collision = NodePath("CollisionShape3D")
 
 [node name="Body" parent="." instance=ExtResource("1_qhqgy")]
 
@@ -24,8 +24,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
 skeleton = NodePath("../..")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.63746434, 0.7704799, 0, -0.7704799, 0.63746434, -0.51526403, 37.0697, 35.308056)
-fov = 109.3
+transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 80, 30)
+fov = 45.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

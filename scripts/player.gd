@@ -5,9 +5,9 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const ROTATION_SPEED = 2.0
 
-@export var tankBodyMesh: MeshInstance3D
-@export var tankTurretMesh: MeshInstance3D
-@export var tankCollision: CollisionShape3D
+@export var tank_body_mesh: MeshInstance3D
+@export var tank_turret_mesh: MeshInstance3D
+@export var tank_collision: CollisionShape3D
 
 
 func _physics_process(delta: float) -> void:
@@ -18,15 +18,15 @@ func _physics_process(delta: float) -> void:
 	# Handle rotation
 	var rotation_direction := Input.get_axis("turn_clockwise", "turn_counter_clockwise")
 	if rotation_direction:
-		tankBodyMesh.rotate_y(rotation_direction * ROTATION_SPEED * delta)
-		if tankCollision:
-			tankCollision.rotation.y = tankBodyMesh.rotation.y
+		tank_body_mesh.rotate_y(rotation_direction * ROTATION_SPEED * delta)
+		if tank_collision:
+			tank_collision.rotation.y = tank_body_mesh.rotation.y
 
 	# Handle movement
 	var input_dir := Input.get_axis("move_backward", "move_forward")
 	if input_dir:
 		# Move in the direction the tank body is facing
-		var direction = -tankBodyMesh.global_transform.basis.z * input_dir
+		var direction = -tank_body_mesh.global_transform.basis.z * input_dir
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:

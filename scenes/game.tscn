@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b3pdxmdq6t8su" path="res://scenes/floor.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://bjp2xgds1j05w" path="res://scenes/player.tscn" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://b3heriggt2bb0" path="res://scenes/turret.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://cmuffuqth4y7k" path="res://scenes/mob_spawner.tscn" id="3_lnu2h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -31,5 +31,4 @@ shadow_enabled = true
 [node name="Player" parent="." instance=ExtResource("2_yqjtg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.961763, 0)
 
-[node name="Turret" parent="." instance=ExtResource("3_lnu2h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8626385, -17.949753)
+[node name="MobSpawner" parent="." instance=ExtResource("3_lnu2h")]
