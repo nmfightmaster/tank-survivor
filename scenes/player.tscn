@@ -1,13 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjp2xgds1j05w"]
+[gd_scene load_steps=9 format=3 uid="uid://bjp2xgds1j05w"]
 
 [ext_resource type="Script" uid="uid://bnqd1kjginpva" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="PackedScene" uid="uid://wdu63qe4pi3i" path="res://scenes/body.tscn" id="1_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://b3heriggt2bb0" path="res://scenes/turret.tscn" id="2_dqkch"]
 [ext_resource type="PackedScene" uid="uid://br8lhmc0lhflp" path="res://scenes/barrel.tscn" id="3_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://cmuffuqth4y7k" path="res://scenes/mob_spawner.tscn" id="5_qlg0r"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_qhqgy"]
-size = Vector3(4, 3, 6)
 
 [sub_resource type="Curve3D" id="Curve3D_dqkch"]
 closed = true
@@ -17,11 +14,20 @@ _data = {
 }
 point_count = 4
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("tank_body_mesh", "tank_turret_mesh", "tank_collision")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_qhqgy"]
+size = Vector3(4, 3, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
+size = Vector3(4.5, 1, 6.5)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("tank_body_mesh", "tank_turret_mesh", "tank_collision", "tank_hitbox")]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_dqkch")
 tank_body_mesh = NodePath("Body")
 tank_turret_mesh = NodePath("Turret")
-tank_collision = NodePath("CollisionShape3D")
+tank_collision = NodePath("TankCollision")
+tank_hitbox = NodePath("Hitbox")
 
 [node name="Body" parent="." instance=ExtResource("1_qhqgy")]
 
@@ -36,10 +42,6 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 100, 40)
 fov = 45.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("BoxShape3D_qhqgy")
-
 [node name="Path3D" type="Path3D" parent="."]
 curve = SubResource("Curve3D_dqkch")
 
@@ -49,3 +51,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 75)
 [node name="MobSpawner" parent="." node_paths=PackedStringArray("spawn_path") instance=ExtResource("5_qlg0r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 75)
 spawn_path = NodePath("../Path3D/PathFollow3D")
+
+[node name="TankCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_qhqgy")
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="DamageTimer" type="Timer" parent="Hitbox"]
+wait_time = 0.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("BoxShape3D_qlg0r")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="Hitbox/DamageTimer" to="." method="_on_damage_timer_timeout"]

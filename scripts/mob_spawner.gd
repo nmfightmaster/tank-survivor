@@ -13,5 +13,3 @@ func spawn_mob() -> void:
 	mob.position = spawn_path.global_position
 	
 	get_tree().current_scene.add_child(mob)
-	
-	print("Spawned enemy at: ", mob.global_position, " Time: ", Time.get_ticks_msec())

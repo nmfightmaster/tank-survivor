@@ -8,6 +8,7 @@
 size = Vector2(10000, 10000)
 
 [node name="Floor" type="StaticBody3D"]
+collision_mask = 7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("WorldBoundaryShape3D_ryoud")
