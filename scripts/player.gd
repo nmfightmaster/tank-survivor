@@ -9,8 +9,12 @@ const ROTATION_SPEED = 2.0
 @export var tank_turret_mesh: MeshInstance3D
 @export var tank_collision: CollisionShape3D
 
+func _ready() -> void:
+	GameManager.player_position = global_position
 
 func _physics_process(delta: float) -> void:
+	GameManager.player_position = global_position
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -34,3 +38,4 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
