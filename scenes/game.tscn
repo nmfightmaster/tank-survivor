@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://l17o1eiegs8i"]
+[gd_scene load_steps=6 format=3 uid="uid://l17o1eiegs8i"]
 
 [ext_resource type="PackedScene" uid="uid://b3pdxmdq6t8su" path="res://scenes/floor.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://bjp2xgds1j05w" path="res://scenes/player.tscn" id="2_yqjtg"]
@@ -16,8 +16,6 @@ sky = SubResource("Sky_80nbo")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="BoxMesh" id="BoxMesh_yqjtg"]
-
 [node name="Game" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -31,7 +29,3 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Floor" parent="." instance=ExtResource("1_uwrxv")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.028727)
-mesh = SubResource("BoxMesh_yqjtg")

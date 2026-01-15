@@ -1,8 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3pdxmdq6t8su"]
+[gd_scene load_steps=4 format=3 uid="uid://b3pdxmdq6t8su"]
+
+[ext_resource type="Material" uid="uid://dj1aslv3xjlh" path="res://assets/Ground037_1K-JPG/Ground037_1K-JPG.tres" id="1_ukw5w"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ryoud"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_c41w6"]
+size = Vector2(10000, 10000)
 
 [node name="Floor" type="StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("WorldBoundaryShape3D_ryoud")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_ukw5w")
+mesh = SubResource("PlaneMesh_c41w6")
