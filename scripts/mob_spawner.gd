@@ -2,13 +2,14 @@ extends Node3D
 
 @export var mob_scene: PackedScene
 
+@export var spawn_path: PathFollow3D
+
 func _on_timer_timeout() -> void:
 	spawn_mob()
 
 func spawn_mob() -> void:
-	var random_x = randf_range(-20.0, 20.0)
-	var random_z = randf_range(-20.0, 20.0)
-
 	var mob = mob_scene.instantiate()
-	add_child(mob)
-	mob.position = Vector3(random_x, 1.5, random_z)
+	
+	spawn_path.progress_ratio = randf()
+	get_tree().current_scene.add_child(mob)
+	mob.global_position = spawn_path.global_position

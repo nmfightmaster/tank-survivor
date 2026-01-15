@@ -1,12 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjp2xgds1j05w"]
+[gd_scene load_steps=8 format=3 uid="uid://bjp2xgds1j05w"]
 
 [ext_resource type="Script" uid="uid://bnqd1kjginpva" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="PackedScene" uid="uid://wdu63qe4pi3i" path="res://scenes/body.tscn" id="1_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://b3heriggt2bb0" path="res://scenes/turret.tscn" id="2_dqkch"]
 [ext_resource type="PackedScene" uid="uid://br8lhmc0lhflp" path="res://scenes/barrel.tscn" id="3_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://cmuffuqth4y7k" path="res://scenes/mob_spawner.tscn" id="5_qlg0r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qhqgy"]
 size = Vector3(4, 3, 6)
+
+[sub_resource type="Curve3D" id="Curve3D_dqkch"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 75, 0, 75, 0, 0, 0, 0, 0, 0, 75, 0, -75, 0, 0, 0, 0, 0, 0, -75, 0, -75, 0, 0, 0, 0, 0, 0, -75, 0, 75),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("tank_body_mesh", "tank_turret_mesh", "tank_collision")]
 script = ExtResource("1_dqkch")
@@ -30,3 +39,13 @@ fov = 45.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_qhqgy")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_dqkch")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 75)
+
+[node name="MobSpawner" parent="." node_paths=PackedStringArray("spawn_path") instance=ExtResource("5_qlg0r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 75)
+spawn_path = NodePath("../Path3D/PathFollow3D")
