@@ -2,14 +2,25 @@ extends CharacterBody3D
 
 @export var speed: float = 10.0
 @export var rotation_speed: float = 2.0
+@export var turret_traversal_speed: float = 4.0
 @export var tank_body_mesh: MeshInstance3D
 @export var tank_turret_mesh: MeshInstance3D
 @export var tank_collision: CollisionShape3D
 @export var tank_hitbox: Area3D
+@export var bullet_scene: PackedScene
 
+@onready var muzzle: Marker3D = $Turret/Barrel/Muzzle
+@onready var shoot_timer: Timer = $ShootTimer
 @onready var damage_timer: Timer = $Hitbox/DamageTimer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var enemies_touching: int = 0
+var is_auto_aiming: bool = false
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_aim"):
+		is_auto_aiming = !is_auto_aiming
+		print("Auto aim: ", is_auto_aiming)
 
 func _ready() -> void:
 	GameManager.player_position = global_position
@@ -32,6 +43,7 @@ func _on_damage_timer_timeout() -> void:
 	take_damage()
 
 func take_damage() -> void:
+	animation_player.play("take_damage")
 	GameManager.player_health -= 10
 	print("Player health: ", GameManager.player_health)
 
@@ -45,8 +57,82 @@ func die() -> void:
 	GameManager.player_health = 100
 	enemies_touching = 0
 
+func get_mouse_world_position():
+	var mouse_pos = get_viewport().get_mouse_position()
+	var camera = get_viewport().get_camera_3d()
+	
+	# 1. Define the start and end of our 'laser beam'
+	var ray_origin = camera.project_ray_origin(mouse_pos)
+	var ray_end = ray_origin + camera.project_ray_normal(mouse_pos) * 2000 # 2000 is the 'range'
+	
+	# 2. Ask the physics world what the laser hits
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	query.collision_mask = 1 # Only hit Layer 1 (the floor)
+	
+	var result = get_world_3d().direct_space_state.intersect_ray(query)
+	
+	# 3. If the laser hit the floor, return that 3D coordinate
+	if result:
+		return result.position
+	return Vector3.ZERO
+
+func get_nearest_enemy():
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	if enemies.size() == 0:
+		return null
+	var nearest_enemy = null
+	var nearest_distance = INF
+	for enemy in enemies:
+		var distance = global_position.distance_to(enemy.global_position)
+		if distance < nearest_distance:
+			nearest_distance = distance
+			nearest_enemy = enemy
+	return nearest_enemy
+
+func _on_shoot_timer_timeout() -> void:
+	shoot()
+
+func shoot() -> void:
+	var bullet = bullet_scene.instantiate()
+	bullet.position = muzzle.global_position
+	bullet.rotation = muzzle.global_rotation
+	get_tree().current_scene.add_child(bullet)
+
 func _physics_process(delta: float) -> void:
 	GameManager.player_position = global_position
+
+	var target_pos = Vector3.ZERO
+
+	if !is_auto_aiming:
+		target_pos = get_mouse_world_position()
+	
+	else:
+		var nearest_enemy = get_nearest_enemy()
+		if nearest_enemy:
+			target_pos = nearest_enemy.global_position
+	
+	if target_pos != Vector3.ZERO:
+		target_pos.y = tank_turret_mesh.global_position.y
+		
+
+		# Calculate the target direction
+		# Using global_transform.looking_at handles the math for us
+		var target_xform = tank_turret_mesh.global_transform.looking_at(target_pos)
+		var target_angle = target_xform.basis.get_euler().y
+		
+		# Get current angle
+		var current_angle = tank_turret_mesh.global_rotation.y
+		
+		# Calculate the difference, ensuring consistent wrapping (-PI to PI)
+		# wrapf(diff, -PI, PI) ensures we take the shortest path
+		var angle_diff = wrapf(target_angle - current_angle, -PI, PI)
+		
+		# Clamp the movement to our speed limits
+		# This creates the "constant speed" traversal effect
+		var rotation_change = clamp(angle_diff, -turret_traversal_speed * delta, turret_traversal_speed * delta)
+		
+		# Apply rotation
+		tank_turret_mesh.global_rotation.y += rotation_change
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -65,7 +151,7 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_axis("move_backward", "move_forward")
 	if input_dir:
 		# Move in the direction the tank body is facing
-		var direction = -tank_body_mesh.global_transform.basis.z * input_dir
+		var direction = - tank_body_mesh.global_transform.basis.z * input_dir
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
 	else:
@@ -73,4 +159,3 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
-

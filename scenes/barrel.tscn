@@ -1,10 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://br8lhmc0lhflp"]
+[gd_scene load_steps=3 format=3 uid="uid://br8lhmc0lhflp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gvosk"]
+albedo_color = Color(0.07330928, 0.27848393, 0.08292537, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_gvosk"]
 size = Vector3(0.3, 0.3, 5)
 
 [node name="Barrel" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0019066334, -0.00556314, -0.001221776)
+material_override = SubResource("StandardMaterial3D_gvosk")
 mesh = SubResource("BoxMesh_gvosk")
 
-[node name="Marker3D" type="Marker3D" parent="."]
+[node name="Muzzle" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5107994)
