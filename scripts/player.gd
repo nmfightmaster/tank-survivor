@@ -68,6 +68,7 @@ func get_mouse_world_position():
 	# 2. Ask the physics world what the laser hits
 	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
 	query.collision_mask = 1 # Only hit Layer 1 (the floor)
+	query.exclude = [self]
 	
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
 	
