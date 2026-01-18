@@ -1,0 +1,31 @@
+- 3d - a la Deep Rock Galactic Survivor, not Vampire Survivors
+- destructible terrain?
+- stats:
+	- turret traversal
+	- tank speed
+	- tank health
+	- projectile count?
+	- projectile speed
+	- fire rate
+	- damage
+	- explosion radius?
+	- crit?
+	- homing?
+	- penetration
+	- bouncing
+	- splitting
+- different (attachable?) weapons:
+	- gatling gun
+	- smoke grenades
+	- napalm
+	- 
+- BTD aiming per weapon
+	- prioritize strongest, fastest, nearest, or manual
+- cartoonish
+- enemies are silly, don't make sense
+	- bugs? skeletons?
+- extra movement options:
+	- jump/hover
+	- dig/tunneling
+- enemies and player get upgrades/stat boosts
+	- decided by slot machine?...
