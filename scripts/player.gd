@@ -13,6 +13,8 @@ extends CharacterBody3D
 @onready var shoot_timer: Timer = $ShootTimer
 @onready var damage_timer: Timer = $Hitbox/DamageTimer
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var engine_sound: AudioStreamPlayer3D = $EngineSound
+@onready var reload_sound: AudioStreamPlayer3D = $ReloadSound
 
 var enemies_touching: int = 0
 var is_auto_aiming: bool = false
@@ -98,6 +100,9 @@ func shoot() -> void:
 	bullet.position = muzzle.global_position
 	bullet.rotation = muzzle.global_rotation
 	get_tree().current_scene.add_child(bullet)
+	
+	await get_tree().create_timer(0.5).timeout
+	reload_sound.play()
 
 func _physics_process(delta: float) -> void:
 	GameManager.player_position = global_position
@@ -158,5 +163,12 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
+
+	if input_dir or rotation_direction:
+		if not engine_sound.playing:
+			engine_sound.play()
+	else:
+		if engine_sound.playing:
+			engine_sound.stop()
 
 	move_and_slide()

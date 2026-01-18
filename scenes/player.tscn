@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bjp2xgds1j05w"]
+[gd_scene load_steps=15 format=3 uid="uid://bjp2xgds1j05w"]
 
 [ext_resource type="Script" uid="uid://bnqd1kjginpva" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="PackedScene" uid="uid://wdu63qe4pi3i" path="res://scenes/body.tscn" id="1_qhqgy"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://br8lhmc0lhflp" path="res://scenes/barrel.tscn" id="3_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://cmuffuqth4y7k" path="res://scenes/mob_spawner.tscn" id="5_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://defwdv7okradj" path="res://scenes/bullet.tscn" id="6_tuyoq"]
+[ext_resource type="AudioStream" uid="uid://djwqmr8fc4tcu" path="res://assets/audio/tank-track-ratteling-197409.mp3" id="7_fjrip"]
+[ext_resource type="AudioStream" uid="uid://b4j0vcfw0kdfh" path="res://assets/audio/tank-reload-47828.mp3" id="8_smehm"]
 
 [sub_resource type="Curve3D" id="Curve3D_dqkch"]
 closed = true
@@ -20,45 +22,6 @@ size = Vector3(4, 3, 6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
 size = Vector3(4.3, 3, 6.3)
-
-[sub_resource type="Animation" id="Animation_qlg0r"]
-resource_name = "take_damage"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Turret:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Turret/Barrel:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(1, 1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_tuyoq"]
 length = 0.001
@@ -97,6 +60,45 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qlg0r"]
+resource_name = "take_damage"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Turret:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Turret/Barrel:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fjrip"]
@@ -160,6 +162,13 @@ libraries = {
 
 [node name="ShootTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="EngineSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_fjrip")
+parameters/looping = false
+
+[node name="ReloadSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("8_smehm")
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
