@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0lr6v45q15bp"]
+[gd_scene load_steps=5 format=3 uid="uid://b0lr6v45q15bp"]
 
 [ext_resource type="Script" uid="uid://y2y7pauhcb64" path="res://scripts/enemy.gd" id="1_7p1mj"]
+[ext_resource type="PackedScene" uid="uid://cyx356pu1vqre" path="res://scenes/xp.tscn" id="2_md0e3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8tegq"]
 radius = 2.0
@@ -14,6 +15,7 @@ height = 4.0
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_7p1mj")
+xp_scene = ExtResource("2_md0e3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_8tegq")

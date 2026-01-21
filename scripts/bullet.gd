@@ -1,7 +1,7 @@
 extends Area3D
 
-@export var speed: float = 50.0
-@export var damage: float = 10.0
+var speed: float = 0.0
+var damage: float = 0.0
 @onready var fire_sound: AudioStreamPlayer3D = $FireSound
 @onready var explosion_sound: AudioStreamPlayer3D = $ExplosionSound
 @onready var mesh: MeshInstance3D = $MeshInstance3D
