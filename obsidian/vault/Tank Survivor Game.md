@@ -29,3 +29,5 @@
 	- dig/tunneling
 - enemies and player get upgrades/stat boosts
 	- decided by slot machine?...
+- metaprogression
+	- farming via hose/cannon/"carbine" harvester

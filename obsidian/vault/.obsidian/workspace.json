@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "6fc15a589afca32c",
+        "id": "85502b5c7e439466",
         "type": "tabs",
         "children": [
           {
-            "id": "56f10e1976ec0f16",
+            "id": "cab571695ca7bbad",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Tank Survivor Game.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Tank Survivor Game"
             }
           }
         ]
@@ -176,7 +180,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "56f10e1976ec0f16",
+  "active": "cab571695ca7bbad",
   "lastOpenFiles": [
     "Tank Survivor Game.md"
   ]
