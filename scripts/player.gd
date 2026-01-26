@@ -27,7 +27,7 @@ func _input(event: InputEvent) -> void:
 func _ready() -> void:
 	GameManager.player_position = global_position
 	# Initialize shoot timer based on fire rate
-	shoot_timer.wait_time = 1.0 / GameManager.player_fire_rate
+	shoot_timer.wait_time = 1.0 / GameManager.player_fire_rate.get_value()
 
 func _on_hitbox_body_entered(body: Node3D) -> void:
 	if body.is_in_group("enemy"):
@@ -101,12 +101,12 @@ func shoot() -> void:
 	var bullet = bullet_scene.instantiate()
 	bullet.position = muzzle.global_position
 	bullet.rotation = muzzle.global_rotation
-	bullet.damage = GameManager.player_damage
-	bullet.speed = GameManager.player_projectile_speed
+	bullet.damage = GameManager.player_damage.get_value()
+	bullet.speed = GameManager.player_projectile_speed.get_value()
 	get_tree().current_scene.add_child(bullet)
 	
 	# Update timer in case fire rate changed
-	shoot_timer.wait_time = 1.0 / GameManager.player_fire_rate
+	shoot_timer.wait_time = 1.0 / GameManager.player_fire_rate.get_value()
 	shoot_timer.start()
 	
 	await get_tree().create_timer(0.5).timeout
@@ -143,7 +143,8 @@ func _physics_process(delta: float) -> void:
 		
 		# Clamp the movement to our speed limits
 		# This creates the "constant speed" traversal effect
-		var rotation_change = clamp(angle_diff, -GameManager.player_turret_speed * delta, GameManager.player_turret_speed * delta)
+		var turret_speed = GameManager.player_turret_speed.get_value()
+		var rotation_change = clamp(angle_diff, -turret_speed * delta, turret_speed * delta)
 		
 		# Apply rotation
 		tank_turret_mesh.global_rotation.y += rotation_change
@@ -155,7 +156,7 @@ func _physics_process(delta: float) -> void:
 	# Handle rotation
 	var rotation_direction := Input.get_axis("turn_clockwise", "turn_counter_clockwise")
 	if rotation_direction:
-		tank_body_mesh.rotate_y(rotation_direction * GameManager.player_rotation_speed * delta)
+		tank_body_mesh.rotate_y(rotation_direction * GameManager.player_rotation_speed.get_value() * delta)
 		if tank_collision:
 			tank_collision.rotation.y = tank_body_mesh.rotation.y
 		if tank_hitbox:
@@ -166,11 +167,13 @@ func _physics_process(delta: float) -> void:
 	if input_dir:
 		# Move in the direction the tank body is facing
 		var direction = - tank_body_mesh.global_transform.basis.z * input_dir
-		velocity.x = direction.x * GameManager.player_speed
-		velocity.z = direction.z * GameManager.player_speed
+		var pd_speed = GameManager.player_speed.get_value()
+		velocity.x = direction.x * pd_speed
+		velocity.z = direction.z * pd_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, GameManager.player_speed)
-		velocity.z = move_toward(velocity.z, 0, GameManager.player_speed)
+		var pd_speed = GameManager.player_speed.get_value()
+		velocity.x = move_toward(velocity.x, 0, pd_speed)
+		velocity.z = move_toward(velocity.z, 0, pd_speed)
 
 	if input_dir or rotation_direction:
 		if not engine_sound.playing:

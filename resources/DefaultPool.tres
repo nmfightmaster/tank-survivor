@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="UpgradePool" load_steps=4 format=3 uid="uid://brhmf46qbn0ex"]
+
+[ext_resource type="Script" uid="uid://bf60rpite17y5" path="res://scripts/resources/UpgradePool.gd" id="1_6p7nb"]
+[ext_resource type="Script" uid="uid://cpy5b3euycugw" path="res://scripts/resources/UpgradeData.gd" id="2_7e0sc"]
+[ext_resource type="Resource" uid="uid://6rvld24abk42" path="res://resources/SpeedBoost.tres" id="3_7e0sc"]
+
+[resource]
+script = ExtResource("1_6p7nb")
+upgrades = Array[ExtResource("2_7e0sc")]([ExtResource("3_7e0sc")])
+metadata/_custom_type_script = "uid://bf60rpite17y5"
