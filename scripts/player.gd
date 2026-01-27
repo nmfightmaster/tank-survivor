@@ -103,6 +103,12 @@ func shoot() -> void:
 	bullet.rotation = muzzle.global_rotation
 	bullet.damage = GameManager.player_damage.get_value()
 	bullet.speed = GameManager.player_projectile_speed.get_value()
+	
+	# Inject behaviors
+	if bullet is ProjectileBase:
+		for behavior in GameManager.active_projectile_behaviors:
+			bullet.add_behavior(behavior.duplicate())
+			
 	get_tree().current_scene.add_child(bullet)
 	
 	# Update timer in case fire rate changed

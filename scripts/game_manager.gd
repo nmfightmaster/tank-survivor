@@ -16,9 +16,13 @@ var player_damage: Stat
 var player_fire_rate: Stat
 var player_projectile_speed: Stat
 
+# Projectile Behaviors
+var active_projectile_behaviors: Array[ProjectileBehavior] = []
+
+
 # Enemy Stats
-var enemy_health: int = 20
-var enemy_speed: float = 9.0
+var enemy_health: float = 10.0
+var enemy_speed: float = 20.0
 var enemy_spawn_rate: float = 0.5 
 
 # Upgrade Pool
@@ -33,7 +37,7 @@ func _init_stats() -> void:
 	player_rotation_speed = Stat.new(2.0)
 	player_turret_speed = Stat.new(4.0)
 	player_damage = Stat.new(10.0)
-	player_fire_rate = Stat.new(2.0) # Shots per second
+	player_fire_rate = Stat.new(0.5) # Shots per second
 	player_projectile_speed = Stat.new(50.0)
 	
 	# Emit change when any stat changes
@@ -54,6 +58,7 @@ func reset() -> void:
 	xp_to_next_level = 100
 	player_health = 100
 	_init_stats() # Reset stats to base
+	active_projectile_behaviors.clear()
 	calculate_enemy_stats()
 
 func gain_xp(amount: int):
@@ -84,7 +89,7 @@ func trigger_upgrade_selection():
 	if ui_scene:
 		var ui_instance = ui_scene.instantiate()
 		get_tree().current_scene.add_child(ui_instance)
-		var options = upgrade_pool.pick_random_upgrades(3)
+		var options = upgrade_pool.pick_random_upgrades(3, active_projectile_behaviors)
 		ui_instance.set_options(options)
 	else:
 		print("UpgradeSelectionUI scene not found at res://scenes/ui/UpgradeSelectionUI.tscn")
@@ -99,7 +104,49 @@ func apply_upgrade(upgrade: UpgradeData):
 	if stat_obj and stat_obj is Stat:
 		stat_obj.add_modifier(modifier)
 	else:
-		print("Error: Could not find stat named ", stat_name)
+		if stat_name != "":
+			print("Error: Could not find stat named ", stat_name)
+			
+	# Handle granted behaviors
+	if upgrade.granted_behavior:
+		var behavior = upgrade.granted_behavior
+		
+		# Case 1: Assigned a Script (e.g. RicochetBehavior.gd)
+		if behavior is Script:
+			var instance = behavior.new()
+			if instance is ProjectileBehavior:
+				active_projectile_behaviors.append(instance)
+				print("Added behavior from script: ", upgrade.title)
+				
+		# Case 2: Assigned a Configured Resource (e.g. Ricochet.tres)
+		elif behavior is ProjectileBehavior:
+			# We duplicate it so if it has state (like cooldowns), it's unique per run? 
+			# Actually, this list is a blueprint. The ProjectileBase duplicates it again.
+			# But 'granted_behavior' is a Resource, so it's shared.
+			# We'll just add it to the list.
+			active_projectile_behaviors.append(behavior)
+			print("Added behavior from resource: ", upgrade.title)
+		else:
+			print("Error: Granted behavior is not a ProjectileBehavior or Script: ", behavior)
+
+	# Handle behavior upgrades (Smart Upgrades)
+	if upgrade.target_behavior_script and upgrade.target_behavior_stat != "":
+		# Find the behavior instance to upgrade
+		var target_instance = null
+		for b in active_projectile_behaviors:
+			if b.get_script() == upgrade.target_behavior_script:
+				target_instance = b
+				break
+		
+		if target_instance:
+			var current_val = target_instance.get(upgrade.target_behavior_stat)
+			var new_val = current_val + upgrade.modifier_value
+			target_instance.set(upgrade.target_behavior_stat, new_val)
+			print("Upgraded Behavior: ", upgrade.title, " | New Value: ", new_val)
+		else:
+			print("Error: Could not find active behavior to upgrade: ", upgrade.target_behavior_script)
+
+
 
 	# Resume game
 	get_tree().paused = false

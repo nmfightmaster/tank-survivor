@@ -10,5 +10,13 @@ extends Resource
 @export var modifier_value: float = 0.0
 @export var modifier_type: StatModifier.Type = StatModifier.Type.ADDITIVE
 
+@export var granted_behavior: Resource # ProjectileBehavior resource
+
+# For upgrading existing behaviors
+@export var target_behavior_script: Script 
+@export var target_behavior_stat: String = ""
+
+
+
 func get_modifier() -> StatModifier:
 	return StatModifier.new(modifier_value, modifier_type, title)
