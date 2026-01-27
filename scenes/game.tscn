@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://l17o1eiegs8i"]
 
-[ext_resource type="PackedScene" uid="uid://b3pdxmdq6t8su" path="res://scenes/floor.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://bjp2xgds1j05w" path="res://scenes/player.tscn" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://c8q5q5q5q5q5" path="res://scenes/ui.tscn" id="3_ui"]
-[ext_resource type="PackedScene" path="res://scenes/wave_manager.tscn" id="4_wm"]
-[ext_resource type="Script" uid="uid://2ywh7t8786md" path="res://scripts/resources/WaveData.gd" id="5_p57ef"]
-[ext_resource type="Resource" uid="uid://bbkbe430d2e8m" path="res://scripts/resources/waves/Wave1.tres" id="6_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://b3pdxmdq6t8su" path="res://scenes/components/floor.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://bjp2xgds1j05w" path="res://scenes/entities/player.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ui.tscn" id="3_ui"]
+[ext_resource type="PackedScene" uid="uid://d2x5y608xaa0c" path="res://scenes/managers/wave_manager.tscn" id="4_wm"]
+[ext_resource type="Script" uid="uid://b6tc2148jgwt0" path="res://scripts/resources/wave_data.gd" id="5_p57ef"]
+[ext_resource type="Resource" uid="uid://bbkbe430d2e8m" path="res://resources/data/waves/Wave1.tres" id="6_u5sy4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

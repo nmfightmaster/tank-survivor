@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=3 format=3 uid="uid://xsrbshcyjio"]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="1_8hifi"]
+[ext_resource type="Script" path="res://scripts/behaviors/ricochet_behavior.gd" id="2_7a48k"]
+
+[resource]
+script = ExtResource("1_8hifi")
+title = "Ricochet"
+description = "Causes bullets to ricochet to an enemy within a certain range."
+granted_behavior = ExtResource("2_7a48k")
+metadata/_custom_type_script = "uid://cpy5b3euycugw"

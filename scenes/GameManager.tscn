@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://q4hg7x64lhyt"]
-
-[ext_resource type="Script" uid="uid://t56plv7xytu2" path="res://scripts/game_manager.gd" id="1_gm_script"]
-[ext_resource type="Resource" uid="uid://7sx60nec3max" path="res://scripts/resources/TestPool.tres" id="2_qppyr"]
-
-[node name="GameManager" type="Node"]
-script = ExtResource("1_gm_script")
-upgrade_pool = ExtResource("2_qppyr")

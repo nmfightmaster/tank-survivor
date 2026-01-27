@@ -40,11 +40,11 @@ The system moves away from raw variables (e.g., `speed = 10`) to an object-orien
 -   **Setup**:
     -   Because `GameManager` is a Singleton, you must convert it to a Scene Autoload to assign the `UpgradePool` in the Inspector.
     -   **Steps**:
-        1.  I have created `res://scenes/GameManager.tscn` for you.
+        1.  I have created `res://scenes/managers/game_manager.tscn` for you.
         2.  Go to **Project -> Project Settings -> Globals (Autoload)**.
         3.  Find `GameManager`.
         4.  Click the folder icon next to the path.
-        5.  Select `res://scenes/GameManager.tscn`.
+        5.  Select `res://scenes/managers/game_manager.tscn`.
         6.  Now you can open `scenes/GameManager.tscn`, click the root node, and assign your `UpgradePool` in the Inspector.
 
 -   **Key Changes**:

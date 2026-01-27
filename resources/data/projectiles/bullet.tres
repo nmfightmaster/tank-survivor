@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=6 format=3 uid="uid://c7qdgem0680qd"]
+
+[ext_resource type="Script" uid="uid://cp72sd7g2vb8i" path="res://scripts/base/projectile_behavior.gd" id="1_npd5y"]
+[ext_resource type="AudioStream" uid="uid://chq1vnxukcabp" path="res://assets/audio/gunshot-352466.mp3" id="2_og7mp"]
+[ext_resource type="Script" uid="uid://cq16ufjw5rf4s" path="res://scripts/resources/projectile_data.gd" id="2_ytf2i"]
+[ext_resource type="AudioStream" uid="uid://c6gc4mn8eodv" path="res://assets/audio/explosion-312361.mp3" id="3_cx6eb"]
+[ext_resource type="PackedScene" uid="uid://defwdv7okradj" path="res://scenes/projectiles/bullet.tscn" id="4_7comf"]
+
+[resource]
+script = ExtResource("2_ytf2i")
+projectile_model = ExtResource("4_7comf")
+fire_sound = ExtResource("2_og7mp")
+hit_sound = ExtResource("3_cx6eb")
+metadata/_custom_type_script = "uid://cq16ufjw5rf4s"
