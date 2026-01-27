@@ -22,8 +22,8 @@ var enemies_touching: int = 0
 var is_auto_aiming: bool = false
 var auto_aim_target: Node3D = null
 
-func get_gravity() -> Vector3:
-    return Vector3(0, -float(ProjectSettings.get_setting("physics/3d/default_gravity")), 0)
+func get_gravity_vector() -> Vector3:
+	return Vector3(0, -float(ProjectSettings.get_setting("physics/3d/default_gravity")), 0)
 
 
 func _input(event: InputEvent) -> void:
@@ -117,7 +117,7 @@ func _on_shoot_timer_timeout() -> void:
 	shoot()
 
 func shoot() -> void:
-    # Refresh target on fire
+	# Refresh target on fire
 	if is_auto_aiming:
 		auto_aim_target = get_nearest_enemy()
 
@@ -186,7 +186,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity_vector() * delta
 
 	# Handle rotation
 	var rotation_direction: float = Input.get_axis("turn_clockwise", "turn_counter_clockwise")

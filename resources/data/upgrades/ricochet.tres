@@ -8,4 +8,4 @@ script = ExtResource("1_8hifi")
 title = "Ricochet"
 description = "Causes bullets to ricochet to an enemy within a certain range."
 granted_behavior = ExtResource("2_7a48k")
-metadata/_custom_type_script = "uid://cpy5b3euycugw"
+metadata/_custom_type_script = "uid://crxl5l5p3twed"
