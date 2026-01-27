@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://c303hc0bbpgqc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ws1nd"]
+albedo_color = Color(0.04755766, 0.047557645, 0.047557645, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ws1nd"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8pxs"]
+albedo_color = Color(0.26657522, 0.2665752, 0.2665752, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2hdg"]
+size = Vector3(0.1, 0.1, 1)
+
+[node name="MachineGun" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_ws1nd")
+mesh = SubResource("CylinderMesh_ws1nd")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14095312, -0.2735086)
+material_override = SubResource("StandardMaterial3D_k8pxs")
+mesh = SubResource("BoxMesh_h2hdg")

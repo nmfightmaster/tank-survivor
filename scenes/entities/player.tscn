@@ -1,12 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bjp2xgds1j05w"]
+[gd_scene load_steps=15 format=3 uid="uid://bjp2xgds1j05w"]
 
-[ext_resource type="Script" path="res://scripts/entities/player.gd" id="1_dqkch"]
-[ext_resource type="PackedScene" path="res://scenes/components/body.tscn" id="1_qhqgy"]
-[ext_resource type="PackedScene" path="res://scenes/components/turret.tscn" id="2_dqkch"]
-[ext_resource type="PackedScene" path="res://scenes/components/barrel.tscn" id="3_qlg0r"]
-[ext_resource type="PackedScene" path="res://scenes/projectiles/bullet.tscn" id="6_tuyoq"]
-[ext_resource type="AudioStream" path="res://assets/audio/tank-track-ratteling-197409.mp3" id="7_fjrip"]
-[ext_resource type="AudioStream" path="res://assets/audio/tank-reload-47828.mp3" id="8_smehm"]
+[ext_resource type="Script" uid="uid://bj1e2sp7vlvup" path="res://scripts/entities/player.gd" id="1_dqkch"]
+[ext_resource type="PackedScene" uid="uid://wdu63qe4pi3i" path="res://scenes/components/body.tscn" id="1_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://b3heriggt2bb0" path="res://scenes/components/turret.tscn" id="2_dqkch"]
+[ext_resource type="PackedScene" uid="uid://br8lhmc0lhflp" path="res://scenes/components/barrel.tscn" id="3_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://c303hc0bbpgqc" path="res://scenes/components/machine_gun.tscn" id="6_dnykm"]
+[ext_resource type="PackedScene" uid="uid://defwdv7okradj" path="res://scenes/projectiles/bullet.tscn" id="6_tuyoq"]
+[ext_resource type="AudioStream" uid="uid://djwqmr8fc4tcu" path="res://assets/audio/tank-track-ratteling-197409.mp3" id="7_fjrip"]
+[ext_resource type="AudioStream" uid="uid://b4j0vcfw0kdfh" path="res://assets/audio/tank-reload-47828.mp3" id="8_smehm"]
 
 [sub_resource type="Curve3D" id="Curve3D_dqkch"]
 closed = true
@@ -124,6 +125,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5004253, 0)
 [node name="Barrel" parent="Turret" instance=ExtResource("3_qlg0r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
 skeleton = NodePath("../..")
+
+[node name="MachineGun" parent="Turret" instance=ExtResource("6_dnykm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45151216, 0.59091973, -0.35905161)
+
+[node name="Marker3D" type="Marker3D" parent="Turret/MachineGun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14172697, -0.7986592)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 100, 40)
