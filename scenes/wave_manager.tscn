@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2x5y608xaa0c"]
+
+[ext_resource type="Script" path="res://scripts/WaveManager.gd" id="1_wm"]
+
+[sub_resource type="Curve3D" id="Curve3D_circle"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -40, 0, -40, 0, 0, 0, 0, 0, 0, 40, 0, -40, 0, 0, 0, 0, 0, 0, 40, 0, 40, 0, 0, 0, 0, 0, 0, -40, 0, 40, 0, 0, 0, 0, 0, 0, -40, 0, -40),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="WaveManager" type="Node3D" node_paths=PackedStringArray("spawn_path")]
+script = ExtResource("1_wm")
+spawn_path = NodePath("Path3D/PathFollow3D")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_circle")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -40, 0, -40)

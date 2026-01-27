@@ -18,6 +18,7 @@ extends CharacterBody3D
 
 var enemies_touching: int = 0
 var is_auto_aiming: bool = false
+var auto_aim_target: Node3D = null
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_aim"):
@@ -25,6 +26,7 @@ func _input(event: InputEvent) -> void:
 		print("Auto aim: ", is_auto_aiming)
 
 func _ready() -> void:
+	GameManager.player = self
 	GameManager.player_position = global_position
 	# Initialize shoot timer based on fire rate
 	shoot_timer.wait_time = 1.0 / GameManager.player_fire_rate.get_value()
@@ -98,6 +100,10 @@ func _on_shoot_timer_timeout() -> void:
 	shoot()
 
 func shoot() -> void:
+    # Refresh target on fire
+	if is_auto_aiming:
+		auto_aim_target = get_nearest_enemy()
+
 	var bullet = bullet_scene.instantiate()
 	bullet.position = muzzle.global_position
 	bullet.rotation = muzzle.global_rotation
@@ -123,13 +129,19 @@ func _physics_process(delta: float) -> void:
 
 	var target_pos = Vector3.ZERO
 
+	# Optimization: We only check for a new target if:
+	# 1. We don't have one
+	# 2. The current one is invalid (died/freed)
+	# 3. We just fired (handled in shoot(), but we check validity here)
+	
 	if !is_auto_aiming:
 		target_pos = get_mouse_world_position()
-	
 	else:
-		var nearest_enemy = get_nearest_enemy()
-		if nearest_enemy:
-			target_pos = nearest_enemy.global_position
+		if not is_instance_valid(auto_aim_target):
+			auto_aim_target = get_nearest_enemy()
+			
+		if auto_aim_target:
+			target_pos = auto_aim_target.global_position
 	
 	if target_pos != Vector3.ZERO:
 		target_pos.y = tank_turret_mesh.global_position.y

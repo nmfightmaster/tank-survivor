@@ -2,6 +2,7 @@ extends Node
 
 signal stats_changed
 
+var player: CharacterBody3D
 var player_position: Vector3 = Vector3.ZERO
 var player_health: int = 100
 var xp: int = 0

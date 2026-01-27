@@ -1,10 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://bjp2xgds1j05w"]
+[gd_scene load_steps=14 format=3 uid="uid://bjp2xgds1j05w"]
 
 [ext_resource type="Script" uid="uid://bnqd1kjginpva" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="PackedScene" uid="uid://wdu63qe4pi3i" path="res://scenes/body.tscn" id="1_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://b3heriggt2bb0" path="res://scenes/turret.tscn" id="2_dqkch"]
 [ext_resource type="PackedScene" uid="uid://br8lhmc0lhflp" path="res://scenes/barrel.tscn" id="3_qlg0r"]
-[ext_resource type="PackedScene" uid="uid://cmuffuqth4y7k" path="res://scenes/mob_spawner.tscn" id="5_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://defwdv7okradj" path="res://scenes/bullet.tscn" id="6_tuyoq"]
 [ext_resource type="AudioStream" uid="uid://djwqmr8fc4tcu" path="res://assets/audio/tank-track-ratteling-197409.mp3" id="7_fjrip"]
 [ext_resource type="AudioStream" uid="uid://b4j0vcfw0kdfh" path="res://assets/audio/tank-reload-47828.mp3" id="8_smehm"]
@@ -135,10 +134,6 @@ curve = SubResource("Curve3D_dqkch")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 75)
-
-[node name="MobSpawner" parent="." node_paths=PackedStringArray("spawn_path") instance=ExtResource("5_qlg0r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 75)
-spawn_path = NodePath("../Path3D/PathFollow3D")
 
 [node name="TankCollision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

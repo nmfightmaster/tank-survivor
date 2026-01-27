@@ -1,8 +1,8 @@
 class_name RicochetBehavior
 extends ProjectileBehavior
 
-@export var bounce_count: int = 2
-@export var range: float = 150.0
+@export var bounce_count: int = 1
+@export var range: float = 50.0
 @export var ricochet_sound: AudioStream
 
 var _current_bounces: int
@@ -31,25 +31,25 @@ func on_hit_enemy(projectile: Node, context: Dictionary) -> void:
 		_current_bounces -= 1
 
 func _find_nearest_enemy(projectile, origin: Vector3, exclude_node: Node) -> Node3D:
-    var enemies = projectile.get_tree().get_nodes_in_group("enemy")
-    
-    var nearest: Node3D = null
-    var min_dist = range
-    
-    for enemy in enemies:
-        if enemy == exclude_node:
-            continue
-            
-        var dist = origin.distance_to(enemy.global_position)
-        
-        if dist < min_dist:
-            min_dist = dist
-            nearest = enemy
-            
-    return nearest
+	var enemies = projectile.get_tree().get_nodes_in_group("enemy")
+
+	var nearest: Node3D = null
+	var min_dist = range
+
+	for enemy in enemies:
+		if enemy == exclude_node:
+			continue
+			
+		var dist = origin.distance_to(enemy.global_position)
+		
+		if dist < min_dist:
+			min_dist = dist
+			nearest = enemy
+			
+	return nearest
 
 func get_valid_upgrades() -> Array[Dictionary]:
-    return [
-        { "title": "+1 Bounce", "stat": "bounce_count", "value": 1.0 },
-        { "title": "+50 Range", "stat": "range", "value": 50.0 }
-    ]
+	return [
+		{ "title": "+1 Bounce", "stat": "bounce_count", "value": 1.0 },
+		{ "title": "+50 Range", "stat": "range", "value": 50.0 }
+	]

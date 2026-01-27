@@ -1,11 +1,16 @@
-[gd_resource type="Resource" script_class="UpgradePool" load_steps=5 format=3 uid="uid://5kw6cbbj1qg"]
+[gd_resource type="Resource" script_class="UpgradePool" load_steps=10 format=3 uid="uid://5kw6cbbj1qg"]
 
 [ext_resource type="Script" uid="uid://bf60rpite17y5" path="res://scripts/resources/UpgradePool.gd" id="1_6p7nb"]
 [ext_resource type="Script" uid="uid://cpy5b3euycugw" path="res://scripts/resources/UpgradeData.gd" id="2_7e0sc"]
-[ext_resource type="Resource" uid="uid://duetfux88cgt2" path="res://scripts/resources/Ricochet.tres" id="4_2ra6g"]
-[ext_resource type="Resource" path="res://scripts/resources/SpeedBoost.tres" id="4_u3jwg"]
+[ext_resource type="Resource" uid="uid://u1v2w3x4y506" path="res://scripts/resources/upgrades/speed_upgrade.tres" id="5_speed"]
+[ext_resource type="Resource" uid="uid://u2v2w3x4y506" path="res://scripts/resources/upgrades/rotation_upgrade.tres" id="6_rot"]
+[ext_resource type="Resource" uid="uid://u3v2w3x4y506" path="res://scripts/resources/upgrades/turret_speed_upgrade.tres" id="7_turret"]
+[ext_resource type="Resource" uid="uid://u4v2w3x4y506" path="res://scripts/resources/upgrades/damage_upgrade.tres" id="8_dmg"]
+[ext_resource type="Resource" uid="uid://u5v2w3x4y506" path="res://scripts/resources/upgrades/fire_rate_upgrade.tres" id="9_fire"]
+[ext_resource type="Resource" uid="uid://xsrbshcyjio" path="res://scripts/resources/upgrades/ricochet.tres" id="9_hmq02"]
+[ext_resource type="Resource" uid="uid://u6v2w3x4y506" path="res://scripts/resources/upgrades/projectile_speed_upgrade.tres" id="10_proj"]
 
 [resource]
 script = ExtResource("1_6p7nb")
-upgrades = Array[ExtResource("2_7e0sc")]([ExtResource("4_2ra6g"), ExtResource("4_u3jwg")])
+upgrades = Array[ExtResource("2_7e0sc")]([ExtResource("8_dmg"), ExtResource("9_fire"), ExtResource("10_proj"), ExtResource("6_rot"), ExtResource("5_speed"), ExtResource("7_turret"), ExtResource("9_hmq02")])
 metadata/_custom_type_script = "uid://bf60rpite17y5"

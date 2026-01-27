@@ -253,4 +253,3 @@ func play_sound(stream: AudioStream, pitch_randomness: float = 0.1) -> void:
 	
 	# Auto cleanup
 	player.finished.connect(player.queue_free)
-

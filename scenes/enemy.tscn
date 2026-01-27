@@ -1,26 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0lr6v45q15bp"]
-
-[ext_resource type="Script" uid="uid://y2y7pauhcb64" path="res://scripts/enemy.gd" id="1_7p1mj"]
-[ext_resource type="PackedScene" uid="uid://cyx356pu1vqre" path="res://scenes/xp.tscn" id="2_md0e3"]
+[gd_scene load_steps=2 format=3 uid="uid://b0lr6v45q15bp"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8tegq"]
 radius = 2.0
 height = 4.0
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7p1mj"]
-radius = 2.0
-height = 4.0
-
-[node name="Enemy" type="CharacterBody3D" groups=["enemy"]]
-collision_layer = 4
-collision_mask = 7
-script = ExtResource("1_7p1mj")
-speed = 20.0
-health = 10
-xp_scene = ExtResource("2_md0e3")
+[node name="EnemyVisuals" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_8tegq")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_7p1mj")

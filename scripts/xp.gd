@@ -3,6 +3,7 @@ extends Area3D
 var is_following = false
 var move_speed = 1.0
 var acceleration = 35.0 # Linear acceleration in units/sec^2
+var amount: int = 10
 
 func _ready():
 	is_following = true
@@ -26,5 +27,5 @@ func _physics_process(delta):
 			global_position += direction * move_amount
 
 func collect():
-	GameManager.gain_xp(10)
+	GameManager.gain_xp(amount)
 	queue_free()
