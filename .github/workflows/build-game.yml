@@ -20,7 +20,7 @@ jobs:
           relative_project_path: ./
           archive_output: true
           # THESE MUST MATCH YOUR EXPORT PRESET NAMES EXACTLY
-          export_presets_to_bundle: "Windows Desktop,Linux/X11"
+          export_presets_to_bundle: "Windows Desktop,Linux"
 
       - name: Create Release
         uses: ncipollo/release-action@v1
