@@ -10,7 +10,7 @@ extends Resource
 # We define what stat this touches and how
 @export var target_stat: String = "" # e.g. "player_speed"
 @export var modifier_value: float = 0.0
-@export var modifier_type: StatModifier.Type = StatModifier.Type.ADDITIVE
+@export var modifier_type: int = 0 # StatModifier.Type.ADDITIVE
 
 @export var granted_behavior: Resource # ProjectileBehavior resource
 
