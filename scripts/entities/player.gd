@@ -22,6 +22,10 @@ var enemies_touching: int = 0
 var is_auto_aiming: bool = false
 var auto_aim_target: Node3D = null
 
+func get_gravity() -> Vector3:
+    return Vector3(0, -float(ProjectSettings.get_setting("physics/3d/default_gravity")), 0)
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_aim"):
 		is_auto_aiming = !is_auto_aiming

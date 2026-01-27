@@ -15,7 +15,7 @@ func _init():
 	mat.roughness_texture = load(base_path + "floor_tile_1_roughness.png")
 	mat.metallic = 1.0
 	mat.metallic_texture = load(base_path + "floor_tile_1_metallic.png")
-	mat.metallic_texture_channel = BaseMaterial3D.TEXTURE_CHANNEL_GRAY
+	mat.metallic_texture_channel = BaseMaterial3D.TextureChannel.TEXTURE_CHANNEL_GRAY
 	mat.ao_enabled = true
 	mat.ao_texture = load(base_path + "floor_tile_1_ao.png")
 	
