@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+title = "Max Health"
+description = "Increases Max Health by 25."
+target_stat = "player_max_health"
+modifier_value = 25.0
+modifier_type = 0
+target_behavior_stat = ""

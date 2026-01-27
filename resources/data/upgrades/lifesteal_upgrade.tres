@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://dsa48pu5h48r1"]
+
+[ext_resource type="Script" uid="uid://crxl5l5p3twed" path="res://scripts/resources/upgrade_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+title = "Lifesteal"
+description = "Increases lifesteal by 4%."
+target_stat = "player_lifesteal"
+modifier_value = 4.0

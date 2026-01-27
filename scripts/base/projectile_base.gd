@@ -130,6 +130,16 @@ func _on_body_entered(body: Node3D) -> void:
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
 			
+			# Lifesteal Logic
+			var lifesteal_percent: float = GameManager.player_lifesteal.get_value()
+			if lifesteal_percent > 0.0:
+				var heal_amount: float = damage * (lifesteal_percent / 100.0)
+				GameManager.player_health += heal_amount
+				var max_hp = GameManager.player_max_health.get_value()
+				if GameManager.player_health > max_hp:
+					GameManager.player_health = max_hp
+				print("Lifesteal heal: ", heal_amount, " | New HP: ", GameManager.player_health)
+			
 		hit_enemy.emit(body, context)
 		for behavior in active_behaviors:
 			behavior.on_hit_enemy(self, context)

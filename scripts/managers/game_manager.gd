@@ -9,7 +9,7 @@ signal stats_changed
 
 var player: CharacterBody3D
 var player_position: Vector3 = Vector3.ZERO
-var player_health: int = 100
+var player_health: float = 100.0
 var xp: int = 0
 var xp_to_next_level: int = 100
 var level: int = 1
@@ -21,6 +21,9 @@ var player_turret_speed: Stat
 var player_damage: Stat
 var player_fire_rate: Stat
 var player_projectile_speed: Stat
+var player_lifesteal: Stat
+var player_armor: Stat
+var player_max_health: Stat
 
 # Projectile Behaviors
 var active_projectile_behaviors: Array[ProjectileBehavior] = []
@@ -38,9 +41,12 @@ func _init_stats() -> void:
 	player_damage = Stat.new(10.0)
 	player_fire_rate = Stat.new(0.5) # Shots per second
 	player_projectile_speed = Stat.new(50.0)
+	player_lifesteal = Stat.new(0.0) # Percentage of damage dealt returned as health
+	player_armor = Stat.new(0.0) # Percentage reduction in incoming damage
+	player_max_health = Stat.new(100.0)
 	
 	# Emit change when any stat changes
-	var stats: Array[Stat] = [player_speed, player_rotation_speed, player_turret_speed, player_damage, player_fire_rate, player_projectile_speed]
+	var stats: Array[Stat] = [player_speed, player_rotation_speed, player_turret_speed, player_damage, player_fire_rate, player_projectile_speed, player_lifesteal, player_armor, player_max_health]
 	for s in stats:
 		s.value_changed.connect(func(_val: float) -> void: stats_changed.emit())
 
@@ -50,6 +56,7 @@ func reset() -> void:
 	xp_to_next_level = 100
 	player_health = 100
 	_init_stats() # Reset stats to base
+	player_health = player_max_health.get_value()
 	active_projectile_behaviors.clear()
 
 func gain_xp(amount: int) -> void:
@@ -141,5 +148,8 @@ func get_player_stats_dict() -> Dictionary:
 		"player_turret_speed": player_turret_speed.get_value(),
 		"player_damage": player_damage.get_value(),
 		"player_fire_rate": player_fire_rate.get_value(),
-		"player_projectile_speed": player_projectile_speed.get_value()
+		"player_projectile_speed": player_projectile_speed.get_value(),
+		"player_lifesteal": player_lifesteal.get_value(),
+		"player_armor": player_armor.get_value(),
+		"player_max_health": player_max_health.get_value()
 	}

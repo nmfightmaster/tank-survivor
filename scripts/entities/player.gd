@@ -26,6 +26,10 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_aim"):
 		is_auto_aiming = !is_auto_aiming
 		print("Auto aim: ", is_auto_aiming)
+	elif event.is_action_pressed("level_up"):
+		# Debug: Instant Level Up
+		var needed = GameManager.xp_to_next_level - GameManager.xp
+		GameManager.gain_xp(needed)
 
 func _ready() -> void:
 	GameManager.player = self
@@ -52,8 +56,14 @@ func _on_damage_timer_timeout() -> void:
 
 func take_damage() -> void:
 	animation_player.play("take_damage")
-	GameManager.player_health -= 10
-	print("Player health: ", GameManager.player_health)
+	
+	var base_damage: float = 10.0
+	var armor: float = GameManager.player_armor.get_value()
+	var reduction_multiplier: float = clamp(1.0 - (armor / 100.0), 0.0, 1.0) # Ensure we don't heal from damage
+	var final_damage: float = base_damage * reduction_multiplier
+	
+	GameManager.player_health -= final_damage
+	print("Player took damage: ", final_damage, " (Armor: ", armor, "%) | Health: ", GameManager.player_health)
 
 	if GameManager.player_health <= 0:
 		GameManager.player_health = 0
