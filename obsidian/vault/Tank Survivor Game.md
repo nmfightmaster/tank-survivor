@@ -18,7 +18,6 @@
 	- gatling gun
 	- smoke grenades
 	- napalm
-	- 
 - BTD aiming per weapon
 	- prioritize strongest, fastest, nearest, or manual
 - cartoonish
@@ -31,3 +30,8 @@
 	- decided by slot machine?...
 - metaprogression
 	- farming via hose/cannon/"carbine" harvester
+- utility
+	- machine gun
+	- drone
+	- artillery strike?
+	- 
