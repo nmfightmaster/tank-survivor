@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://newfloormaterial01"]
+
+[ext_resource type="Texture2D" uid="uid://bbca788qsdo1y" path="res://assets/TexturesVol3/Vol 3/Floor Tile 1/PNG/1k/floor_tile_1_color.png" id="1_col"]
+[ext_resource type="Texture2D" uid="uid://ywbl63ecl6kk" path="res://assets/TexturesVol3/Vol 3/Floor Tile 1/PNG/1k/floor_tile_1_normal.png" id="2_nrm"]
+[ext_resource type="Texture2D" uid="uid://dgwlbeqsonahl" path="res://assets/TexturesVol3/Vol 3/Floor Tile 1/PNG/1k/floor_tile_1_roughness.png" id="3_rgh"]
+[ext_resource type="Texture2D" uid="uid://brce2v56s5xj0" path="res://assets/TexturesVol3/Vol 3/Floor Tile 1/PNG/1k/floor_tile_1_metallic.png" id="4_met"]
+[ext_resource type="Texture2D" uid="uid://cn46rus56pwnr" path="res://assets/TexturesVol3/Vol 3/Floor Tile 1/PNG/1k/floor_tile_1_ao.png" id="5_ao"]
+
+[resource]
+albedo_texture = ExtResource("1_col")
+metallic = 1.0
+metallic_texture = ExtResource("4_met")
+metallic_texture_channel = 4
+roughness_texture = ExtResource("3_rgh")
+normal_enabled = true
+normal_texture = ExtResource("2_nrm")
+ao_enabled = true
+ao_texture = ExtResource("5_ao")
+uv1_scale = Vector3(500, 500, 500)
