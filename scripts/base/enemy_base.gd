@@ -33,12 +33,12 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, source: Node = null) -> void:
 	health -= amount
 	if health <= 0:
-		die()
+		die(source)
 
-func die() -> void:
+func die(source: Node = null) -> void:
 	if XP_SCENE:
 		var xp: Node3D = XP_SCENE.instantiate()
 		get_tree().current_scene.add_child(xp)
@@ -49,5 +49,12 @@ func die() -> void:
 			xp.set_amount(xp_reward)
 		elif "amount" in xp:
 			xp.set("amount", xp_reward)
+	
+	# Attribute Kill
+	if source:
+		if source.has_method("increment_kills"):
+			source.increment_kills()
+		elif "owner_vehicle" in source and source.owner_vehicle:
+			source.owner_vehicle.increment_kills()
 	
 	queue_free()

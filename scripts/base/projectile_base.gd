@@ -129,7 +129,9 @@ func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("enemy"):
 		# Deal damage
 		if body.has_method("take_damage"):
-			body.take_damage(damage)
+			# Pass owner_vehicle as source if valid, otherwise self
+			var source = owner_vehicle if is_instance_valid(owner_vehicle) else self
+			body.take_damage(damage, source)
 			
 			# Lifesteal Logic
 			if is_instance_valid(owner_vehicle):

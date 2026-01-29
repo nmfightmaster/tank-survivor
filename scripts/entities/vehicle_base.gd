@@ -39,6 +39,11 @@ var animation_player: AnimationPlayer
 # Projectile Behaviors (Local)
 var active_projectile_behaviors: Array[ProjectileBehavior] = []
 
+# Kill Tracking
+var kills: int = 0
+var next_kill_threshold: int = 10
+signal request_upgrade(vehicle: VehicleBase)
+
 # Aiming
 var auto_aim_target: Node3D = null
 var shoot_timer: Timer
@@ -179,3 +184,21 @@ func apply_stat_modifier(stat_name: String, modifier: StatModifier) -> void:
 	var stat_obj = get(stat_name)
 	if stat_obj and stat_obj is Stat:
 		stat_obj.add_modifier(modifier)
+
+func increment_kills() -> void:
+	kills += 1
+	# Check threshold
+	if kills >= next_kill_threshold:
+		request_upgrade.emit(self)
+		next_kill_threshold *= 2
+		print(name, " reached kill threshold! New threshold: ", next_kill_threshold)
+
+func get_active_behavior_count() -> int:
+	# return number of unique behaviors (by script type)
+	var unique_scripts = []
+	for b in active_projectile_behaviors:
+		var s = b.get_script()
+		if not unique_scripts.has(s):
+			unique_scripts.append(s)
+	return unique_scripts.size()
+

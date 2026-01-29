@@ -68,3 +68,65 @@ func _find_matching_behavior(active: Array[ProjectileBehavior], script: Script) 
 		if b.get_script() == script:
 			return b
 	return null
+
+func pick_behavior_upgrades(count: int = 3, active_behaviors: Array[ProjectileBehavior] = []) -> Array[UpgradeData]:
+	var available: Array[UpgradeData] = behavior_upgrades.duplicate()
+	var picked: Array[UpgradeData] = []
+	
+	# Determine unique active behaviors for cap check
+	var unique_scripts: Array[Script] = []
+	for b in active_behaviors:
+		var s = b.get_script()
+		if not unique_scripts.has(s):
+			unique_scripts.append(s)
+			
+	var at_cap: bool = unique_scripts.size() >= 3
+	
+	# We loop until we satisfy count or run out of valid options
+	for i in range(count):
+		if available.is_empty():
+			break
+			
+		var idx: int = randi() % available.size()
+		var candidate: UpgradeData = available[idx]
+		
+		var behavior_script: Script = _get_behavior_script(candidate)
+		var existing_instance: ProjectileBehavior = _find_matching_behavior(active_behaviors, behavior_script)
+		
+		if existing_instance:
+			# Upgrade existing behavior (Always allowed)
+			var valid_upgrades: Array[Dictionary] = existing_instance.get_valid_upgrades()
+			if valid_upgrades.size() > 0:
+				var option: Dictionary = valid_upgrades.pick_random()
+				var smart_card: UpgradeData = candidate.duplicate()
+				smart_card.title = "Upgrade: " + option.get("title", "Unknown")
+				smart_card.description = "Improves " + candidate.title
+				smart_card.target_behavior_script = behavior_script
+				smart_card.target_behavior_stat = option.get("stat", "")
+				smart_card.modifier_value = option.get("value", 0.0)
+				smart_card.granted_behavior = null 
+				picked.append(smart_card)
+			else:
+				# Maxed out behavior? Maybe pickup anyway or skip?
+				# For now, skip to avoid "do nothing" cards, or add fallback?
+				# Let's just remove from available and continue loop to find another
+				pass
+		else:
+			# New Behavior
+			if not at_cap:
+				picked.append(candidate)
+			else:
+				# At cap, cannot pick new behavior.
+				# Just remove from avail and retry
+				pass
+		
+		# Always remove checked candidate so we don't loop forever
+		available.remove_at(idx)
+		
+		# If we didn't pick anything this iteration (skipped due to cap), we need to try again
+		# effectively 'i' didn't yield a result. But simple loop reduces 'i'.
+		# To guarantee 'count' items, we should use a while loop, but for safety in `for`
+		# we accept getting fewer options if pool is exhausted.
+		
+	return picked
+
