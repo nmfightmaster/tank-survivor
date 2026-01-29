@@ -8,15 +8,23 @@ extends Node
 
 # BOID Weights - Tunable
 @export_group("BOID Weights")
-@export var separation_weight: float = 2.0
-@export var alignment_weight: float = 1.0
-@export var cohesion_weight: float = 1.0
-@export var seek_weight: float = 1.5
-@export var avoid_weight: float = 3.0
+## Pushes neighbors apart to avoid crowding. High values = more spread out.
+@export var separation_weight: float = 25.0
+## Steers to match the average velocity of neighbors. Helps the group move as one unit.
+@export var alignment_weight: float = 1.5
+## Steers towards the center of the neighbor group. Keeps the swarm together.
+@export var cohesion_weight: float = 0.5
+## Steers towards the leader (Player). The primary drive for the squad.
+@export var seek_weight: float = 1.0
+## Pushes away from enemies. High values = panic/flee response when close.
+@export var avoid_weight: float = 5.0
 
 @export_group("BOID Radii")
-@export var neighbor_radius: float = 10.0
-@export var separation_radius: float = 3.0
+## Distance to look for flockmates to align/cohere with.
+@export var neighbor_radius: float = 15.0
+## Distance at which separation force kicks in. Should be smaller than neighbor_radius.
+@export var separation_radius: float = 6.0
+## Distance to start avoiding enemies.
 @export var avoid_radius: float = 8.0
 
 # References
@@ -63,9 +71,9 @@ func _calculate_flocking() -> Vector3:
 		if dist > neighbor_radius: continue
 		
 		# Separation
-		if dist < separation_radius:
-			var diff = controlled_vehicle.global_position - neighbor.global_position
-			separation += diff.normalized() / max(dist, 0.1)
+		# Apply separation for all neighbors within radius, using 1/dist falloff.
+		var diff = controlled_vehicle.global_position - neighbor.global_position
+		separation += diff.normalized() / max(dist, 0.1)
 			
 		# Alignment / Cohesion prep
 		avg_pos += neighbor.global_position
@@ -101,8 +109,13 @@ func _calculate_flocking() -> Vector3:
 	var total_force = (separation * separation_weight + 
 					  alignment * alignment_weight + 
 					  cohesion * cohesion_weight + 
-					  seek * seek_weight + 
 					  avoid * avoid_weight)
+	
+	# If heavily separated (crowded), reduce seeking to prevent pushing into the pile
+	if separation.length() > 1.0:
+		total_force += seek * (seek_weight * 0.1)
+	else:
+		total_force += seek * seek_weight
 					
 	return total_force.normalized()
 
@@ -132,10 +145,11 @@ func _apply_movement(direction_vector: Vector3, _delta: float) -> void:
 		controlled_vehicle.input_rotation = turn_intent
 		
 		# Move if facing roughly correct
-		if abs(angle_to) < PI / 2:
-			controlled_vehicle.input_direction = Vector3(0, 0, -1) # Forward
+		# "Dead zone" removed to ensure they always move to separate.
+		if abs(angle_to) < (PI / 2 + 0.2): # < ~100 degrees
+			controlled_vehicle.input_direction = Vector3(0, 0, 1) # Forward
 		else:
-			controlled_vehicle.input_direction = Vector3.ZERO # Stop to turn
+			controlled_vehicle.input_direction = Vector3(0, 0, -1) # Backward
 			
 	# Case 2: Generic Directional Vehicle (Drone, etc)
 	elif "input_direction" in controlled_vehicle:

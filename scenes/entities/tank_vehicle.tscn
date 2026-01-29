@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8y2qgds1j05x"]
+[gd_scene load_steps=14 format=3 uid="uid://c8y2qgds1j05x"]
 
-[ext_resource type="Script" path="res://scripts/entities/tank_vehicle.gd" id="1_tankv"]
 [ext_resource type="PackedScene" uid="uid://wdu63qe4pi3i" path="res://scenes/components/body.tscn" id="1_qhqgy"]
+[ext_resource type="Script" uid="uid://d1srycj6lv4d6" path="res://scripts/entities/tank_vehicle.gd" id="1_tankv"]
 [ext_resource type="PackedScene" uid="uid://b3heriggt2bb0" path="res://scenes/components/turret.tscn" id="2_dqkch"]
 [ext_resource type="PackedScene" uid="uid://br8lhmc0lhflp" path="res://scenes/components/barrel.tscn" id="3_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://defwdv7okradj" path="res://scenes/projectiles/bullet.tscn" id="6_tuyoq"]
@@ -102,8 +102,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fjrip"]
 _data = {
-"RESET": SubResource("Animation_tuyoq"),
-"take_damage": SubResource("Animation_qlg0r")
+&"RESET": SubResource("Animation_tuyoq"),
+&"take_damage": SubResource("Animation_qlg0r")
 }
 
 [node name="TankVehicle" type="CharacterBody3D" node_paths=PackedStringArray("tank_body_mesh", "tank_turret_mesh", "muzzle")]
@@ -123,9 +123,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5004253, 0)
 [node name="Barrel" parent="Turret" instance=ExtResource("3_qlg0r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
 skeleton = NodePath("../..")
-
-[node name="Muzzle" type="Marker3D" parent="Turret/Barrel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.5)
 
 [node name="Path3D" type="Path3D" parent="."]
 curve = SubResource("Curve3D_dqkch")
@@ -150,7 +147,7 @@ shape = SubResource("BoxShape3D_qlg0r")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_fjrip")
+&"": SubResource("AnimationLibrary_fjrip")
 }
 
 [node name="EngineSound" type="AudioStreamPlayer3D" parent="."]

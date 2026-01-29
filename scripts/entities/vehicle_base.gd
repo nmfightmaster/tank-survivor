@@ -126,9 +126,8 @@ func shoot() -> void:
 	if not bullet_scene or not muzzle:
 		return
 		
-	# Refresh target if needed
-	if not is_instance_valid(auto_aim_target):
-		auto_aim_target = get_nearest_enemy()
+	# Refresh target every shot to ensure we aim at the closest enemy
+	auto_aim_target = get_nearest_enemy()
 	
 	# Only fire if we have a target? Or fire blindly forward?
 	# "Vampire Survivors" usually fires at nearest, or random if none.

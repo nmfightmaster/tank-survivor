@@ -164,6 +164,37 @@ func apply_upgrade(upgrade: UpgradeData) -> void:
     stats_changed.emit()
     get_tree().paused = false
 
+func _input(event: InputEvent) -> void:
+    if event.is_action_pressed("ui_cancel"):
+        toggle_pause()
+
+func info_toggle_pause() -> void:
+    # This function is here to show up in the outline, the real logic is below
+    pass
+
+func toggle_pause() -> void:
+    # Check if we already have a pause menu open (or other blocking UI?)
+    var existing_menu = get_tree().current_scene.find_child("PauseMenu", false, false)
+    if existing_menu:
+        # If it exists, let the menu handle closing itself via its own input or resume button
+        # But we can also force close it here if we want toggle behavior
+        existing_menu.queue_free()
+        get_tree().paused = false
+        resume_game() # Ensure any extra logic runs
+    else:
+        # Avoid opening pause menu if we are in Upgrade Selection
+        if get_tree().paused and get_tree().current_scene.find_child("UpgradeSelectionUI", false, false):
+            return
+
+        var menu_scene = load("res://scenes/ui/pause_menu.tscn")
+        if menu_scene:
+            var menu = menu_scene.instantiate()
+            get_tree().current_scene.add_child(menu)
+            get_tree().paused = true
+
+func resume_game() -> void:
+    get_tree().paused = false
+
 # --- UI Helper ---
 
 ## Returns stats dict for the Main Vehicle (for UI display)

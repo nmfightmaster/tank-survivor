@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b3pdxmdq6t8su" path="res://scenes/components/floor.tscn" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://cqtvanclxemtb" path="res://scripts/controllers/player_controller.gd" id="2_ctrl"]
-[ext_resource type="PackedScene" uid="uid://c8y2qgds1j05x" path="res://scenes/entities/TankVehicle.tscn" id="2_tankv"]
+[ext_resource type="PackedScene" uid="uid://c8y2qgds1j05x" path="res://scenes/entities/tank_vehicle.tscn" id="2_tankv"]
 [ext_resource type="PackedScene" uid="uid://c8q5q5q5q5q5" path="res://scenes/ui/ui.tscn" id="3_ui"]
 [ext_resource type="PackedScene" uid="uid://d2x5y608xaa0c" path="res://scenes/managers/wave_manager.tscn" id="4_wm"]
 [ext_resource type="Script" uid="uid://b6tc2148jgwt0" path="res://scripts/resources/wave_data.gd" id="5_p57ef"]
@@ -35,7 +35,7 @@ script = ExtResource("2_ctrl")
 controlled_vehicle = NodePath("../TankVehicle")
 
 [node name="TankVehicle" parent="." instance=ExtResource("2_tankv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6012783, -0.38986015, 2.2862842)
 
 [node name="Camera3D" type="Camera3D" parent="TankVehicle"]
 transform = Transform3D(1, 0, 0, 0, 0.34202015, 0.9396926, 0, -0.9396926, 0.34202015, 0, 100, 40)

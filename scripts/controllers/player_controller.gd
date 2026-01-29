@@ -19,11 +19,10 @@ func _process(delta: float) -> void:
 	controlled_vehicle.input_rotation = rotation_input
 	
 	# Handle Movement Input (W/S or Up/Down)
-	# NOTE: We map "move_forward" to negative Z (standard Godot forward)
-	# but Input.get_axis returns -1 for min, 1 for max.
-	# move_backward (S) -> +1, move_forward (W) -> -1
-	# In TankVehicle we check input_direction.z.
-	# If input is W (-1), we want to move Forward.
+	# NOTE: We map "move_forward" to positive Z because TankVehicle expects +1 for Forward.
+	# Input.get_axis(negative_action, positive_action) returns:
+	# -1 for negative_action (move_backward / S)
+	# +1 for positive_action (move_forward / W)
 	var move_input: float = Input.get_axis("move_backward", "move_forward")
 	
 	# Pass as Z component for "Forward/Back" axis
@@ -34,11 +33,10 @@ func _process(delta: float) -> void:
 		_debug_spawn_squad_member()
 
 func _debug_spawn_squad_member() -> void:
-	# Debounce (simple hack, better to use "is_action_just_pressed" but we don't have an action)
-	# For now, relying on user tapping quickly or adding a cooldown
+	# Debounce
 	if get_tree().paused: return
 	
-	var scene = load("res://scenes/entities/TankVehicle.tscn")
+	var scene = load("res://scenes/entities/tank_vehicle.tscn")
 	var new_tank = scene.instantiate()
 	get_tree().current_scene.add_child(new_tank)
 	
@@ -50,6 +48,12 @@ func _debug_spawn_squad_member() -> void:
 		
 	# Add some initial random rotation
 	new_tank.rotation.y = randf() * TAU
+	
+	# ATTACH AI CONTROLLER
+	var ai_controller = SquadMemberController.new()
+	ai_controller.name = "SquadAI"
+	new_tank.add_child(ai_controller)
+	ai_controller.controlled_vehicle = new_tank
 	
 	# Wait a bit to prevent spam
 	await get_tree().create_timer(0.5).timeout 
