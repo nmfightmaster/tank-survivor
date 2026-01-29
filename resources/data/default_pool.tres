@@ -15,4 +15,5 @@
 
 [resource]
 script = ExtResource("1_6p7nb")
-upgrades = Array[ExtResource("2_7e0sc")]([ExtResource("8_dmg"), ExtResource("9_fire"), ExtResource("10_proj"), ExtResource("6_rot"), ExtResource("5_speed"), ExtResource("7_turret"), ExtResource("9_hmq02"), ExtResource("11_life"), ExtResource("12_armor"), ExtResource("13_health")])
+stat_upgrades = Array[ExtResource("2_7e0sc")]([ExtResource("8_dmg"), ExtResource("9_fire"), ExtResource("10_proj"), ExtResource("6_rot"), ExtResource("5_speed"), ExtResource("7_turret"), ExtResource("11_life"), ExtResource("12_armor"), ExtResource("13_health")])
+behavior_upgrades = Array[ExtResource("2_7e0sc")]([ExtResource("9_hmq02")])

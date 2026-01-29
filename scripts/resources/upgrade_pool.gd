@@ -3,12 +3,13 @@ extends Resource
 
 ## Manages a pool of available upgrades.
 
-@export var upgrades: Array[UpgradeData] = []
+@export var stat_upgrades: Array[UpgradeData] = []
+@export var behavior_upgrades: Array[UpgradeData] = []
 # Later we can add weights or rarity buckets here
 
 # 'active_behaviors' is a list of ProjectileBehavior INSTANCES currently owned by the player.
 func pick_random_upgrades(count: int = 3, active_behaviors: Array[ProjectileBehavior] = []) -> Array[UpgradeData]:
-	var available: Array[UpgradeData] = upgrades.duplicate()
+	var available: Array[UpgradeData] = stat_upgrades.duplicate()
 	var picked: Array[UpgradeData] = []
 	
 	for i in range(count):
