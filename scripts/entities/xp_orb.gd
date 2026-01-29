@@ -17,7 +17,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_following:
 		# Move toward the player's global position
-		var target_pos: Vector3 = GameManager.player_position
+		var target_pos: Vector3 = Vector3.ZERO
+		if is_instance_valid(GameManager.main_vehicle):
+			target_pos = GameManager.main_vehicle.global_position
 		var distance_to_target: float = global_position.distance_to(target_pos)
 		
 		# Linear acceleration instead of exponential multiplication

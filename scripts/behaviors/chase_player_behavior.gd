@@ -6,8 +6,8 @@ extends EnemyBehavior
 func process_behavior(enemy: CharacterBody3D, delta: float) -> void:
 	# Basic chase logic
 	var target_pos: Vector3 = Vector3.ZERO
-	if GameManager.player_position:
-		target_pos = GameManager.player_position
+	if is_instance_valid(GameManager.main_vehicle):
+		target_pos = GameManager.main_vehicle.global_position
 	
 	var direction: Vector3 = enemy.global_position.direction_to(target_pos)
 	

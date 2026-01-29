@@ -17,6 +17,7 @@ var speed: float = 50.0
 var damage: float = 10.0
 var active_behaviors: Array[ProjectileBehavior] = []
 var lifetime_timer: Timer
+var owner_vehicle: VehicleBase
 
 @onready var mesh_instance: MeshInstance3D = get_node_or_null("MeshInstance3D")
 
@@ -131,14 +132,12 @@ func _on_body_entered(body: Node3D) -> void:
 			body.take_damage(damage)
 			
 			# Lifesteal Logic
-			var lifesteal_percent: float = GameManager.player_lifesteal.get_value()
-			if lifesteal_percent > 0.0:
-				var heal_amount: float = damage * (lifesteal_percent / 100.0)
-				GameManager.player_health += heal_amount
-				var max_hp = GameManager.player_max_health.get_value()
-				if GameManager.player_health > max_hp:
-					GameManager.player_health = max_hp
-				print("Lifesteal heal: ", heal_amount, " | New HP: ", GameManager.player_health)
+			if is_instance_valid(owner_vehicle):
+				var lifesteal_percent: float = owner_vehicle.lifesteal.get_value()
+				if lifesteal_percent > 0.0:
+					var heal_amount: float = damage * (lifesteal_percent / 100.0)
+					owner_vehicle.heal(heal_amount)
+					print("Lifesteal heal: ", heal_amount, " | New HP: ", owner_vehicle.current_health)
 			
 		hit_enemy.emit(body, context)
 		for behavior in active_behaviors:
