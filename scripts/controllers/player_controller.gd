@@ -28,3 +28,28 @@ func _process(delta: float) -> void:
 	
 	# Pass as Z component for "Forward/Back" axis
 	controlled_vehicle.input_direction = Vector3(0, 0, move_input) 
+
+	# DEBUG: Spawn Squad Member
+	if Input.is_action_just_pressed("spawn_vehicle"):
+		_debug_spawn_squad_member()
+
+func _debug_spawn_squad_member() -> void:
+	# Debounce (simple hack, better to use "is_action_just_pressed" but we don't have an action)
+	# For now, relying on user tapping quickly or adding a cooldown
+	if get_tree().paused: return
+	
+	var scene = load("res://scenes/entities/TankVehicle.tscn")
+	var new_tank = scene.instantiate()
+	get_tree().current_scene.add_child(new_tank)
+	
+	if is_instance_valid(controlled_vehicle):
+		var offset = Vector3(randf_range(-5, 5), 0, randf_range(-5, 5))
+		new_tank.global_position = controlled_vehicle.global_position + offset
+	else:
+		new_tank.global_position = Vector3(0, 1, 0)
+		
+	# Add some initial random rotation
+	new_tank.rotation.y = randf() * TAU
+	
+	# Wait a bit to prevent spam
+	await get_tree().create_timer(0.5).timeout 
