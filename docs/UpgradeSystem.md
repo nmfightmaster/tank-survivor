@@ -13,7 +13,11 @@ The system processes upgrades in two distinct categories: **Stat Upgrades** and 
 -   **Purpose**: Manages the collections of available upgrades.
 -   **Structure**:
     -   `stat_upgrades`: Array of `UpgradeData` for numeric stat boosts. **These are available in the Level-Up pool.**
-    -   `behavior_upgrades`: Array of `UpgradeData` for granting new behaviors. **These are excluded from the Level-Up pool** and must be granted by other means (future implementation).
+    -   `behavior_upgrades`: Array of `UpgradeData` for granting new behaviors. **These are excluded from the Level-Up pool** and are granted when a specific vehicle reaches a kill threshold.
+    -   **Functionality**:
+        -   `pick_behavior_upgrades(count, active_behaviors)`: Selects behavior upgrades intelligently.
+        -   **Smart Upgrades**: If a vehicle already owns a behavior (e.g., Ricochet), this method converts the "Unlock Ricochet" card into an "Upgrade Ricochet" card (e.g., +1 Bounce).
+        -   **Cap Limit**: Vehicles can hold a maximum of **3 unique behaviors**. Once capped, new behaviors will not be offered.
 
 #### `UpgradeData` (Resource)
 -   **Location**: `res://scripts/resources/upgrade_data.gd`
@@ -22,6 +26,7 @@ The system processes upgrades in two distinct categories: **Stat Upgrades** and 
     -   `target_stat`: String name of the variable in `VehicleBase` to modify (e.g., `"speed"`).
     -   `modifier_value` & `modifier_type`: Defines the underlying `StatModifier`.
     -   `granted_behavior`: A `ProjectileBehavior` resource or script to properly add a new mechanic to the vehicle.
+    -   `target_behavior_script` & `target_behavior_stat`: For substat upgrades (e.g., boosting `bounce_count` on an existing Ricochet behavior).
 
 #### `Stat` (Resource)
 -   **Location**: `res://scripts/resources/stat.gd`
@@ -37,7 +42,8 @@ The system processes upgrades in two distinct categories: **Stat Upgrades** and 
 -   **Key Changes**:
     -   `apply_upgrade(upgrade)`:
         -   **Stat Upgrades**: Applied globally to **all** vehicles in the squadron.
-        -   **Behavior Upgrades**: Applied to the **Main Vehicle** (currently).
+        -   **Behavior Upgrades**: Applied to the **Specific Vehicle** that triggered the upgrade request.
+    -   `_on_vehicle_request_upgrade(vehicle)`: Handles individual vehicle upgrade triggers.
 
 ---
 
@@ -72,7 +78,7 @@ The system processes upgrades in two distinct categories: **Stat Upgrades** and 
 2.  **Add to Pool**:
     -   Open `res://resources/data/default_pool.tres`.
     -   Add your new resource to the **`Behavior Upgrades`** array.
-    -   **Result:** This upgrade is **NOT** available via Level-Up. It exists in the database but requires a specific game event to grant it (to be implemented).
+    -   **Result:** This upgrade is **NOT** available via Level-Up. It will be offered when a vehicle reaches its kill threshold.
 
 ### How to Add a New Stat Attribute
 If you want to track a new attribute (e.g., "Armor"):
@@ -92,3 +98,8 @@ If you want to track a new attribute (e.g., "Armor"):
     ```gdscript
     var damage_taken = calculate_damage(incoming) - armor.get_value()
     ```
+
+### Kill Threshold System
+- **Scaling**: Each vehicle tracks its own kills.
+- **Milestones**: Upgrades are granted at 10, 20, 40, 80... kills (doubles each time).
+- **Trigger**: `VehicleBase` emits `request_upgrade` when threshold is met.
